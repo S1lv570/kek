@@ -27,8 +27,13 @@ dialog_history = {}
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    reply_keyboard = [['Asuka'], ['Zero Two'], ['Ryuko Matoi']]
-    markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+    #reply_keyboard = [['Asuka'], ['Zero Two'], ['Ryuko Matoi']]
+    markup = types.InlineKeyboardMarkup()
+    #markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+    item1 = types.InlineKeyboardButton('Asuka', callback_data='asuka')
+    item2 = types.InlineKeyboardButton('Zero Two',callback_data='zero_two')
+    item3 = types.InlineKeyboardButton('Ryuko Matoi', callback_data='ryuoko_matoi')
+    markup.add(item1, item2, item3)
     bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup)
     bot.register_next_step_handler(message, chosen_persona)
 
