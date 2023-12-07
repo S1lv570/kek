@@ -49,7 +49,7 @@ def chosen_persona(message):
             elif call.data == 'zero_two':
                 dialog_history[user_id] = {'chosen_girl': 'Zero Two', 'messages': []}
             elif call.data == 'ryuoko_matoi':
-                dialog_history[user_id] = {'chosen_girl': 'Ryuoko Matoi', []}
+                dialog_history[user_id] = {'chosen_girl': 'Ryuoko Matoi', 'messages': []}
     #dialog_history[user_id] = {'chosen_girl': message.text, 'messages': []}
     #reply_keyboard = [['Friendly'], ['Aggressive'], ['Mysterious']]
     #markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
