@@ -37,9 +37,8 @@ def start(message):
     item3 = types.InlineKeyboardButton('Ryuko Matoi', callback_data='ryuoko_matoi')
     markup.add(item1, item2, item3)
     bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup)
-    bot.register_next_step_handler(call.message, chosen_persona)
+    #bot.register_next_step_handler(call.message, chosen_persona)
 
-def chosen_persona(message):
     user_id = message.from_user.id
     @bot.callback_query_handler(func=lambda call: True)
     def but(call):
@@ -57,9 +56,8 @@ def chosen_persona(message):
     but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
     bot.send_message(message.chat.id, 'Choose a behaviour:', reply_markup=markup)
-    bot.register_next_step_handler(call.message, chosen_behaviour)
+    #bot.register_next_step_handler(call.message, chosen_behaviour)
 
-def chosen_behaviour(message):
     user_id = message.from_user.id
     @bot.callback_query_handler(func=lambda call: True)
     def item(call):
