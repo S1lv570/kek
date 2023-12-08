@@ -1,7 +1,9 @@
-import random
-import telebot
+import random, logging, telebot
 from telebot import types
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
 API_TOKEN = '6259573339:AAECdYJSGJETtWkfnds2ZOVGZWLMyz2o3Ts'
 MODEL = "microsoft/DialoGPT-medium"
@@ -25,49 +27,49 @@ behaviors = {
 
 dialog_history = {}
 
-markup = types.InlineKeyboardMarkup()
-
 @bot.message_handler(commands=['start'])
 def start(message):
     #reply_keyboard = [['Asuka'], ['Zero Two'], ['Ryuko Matoi']]
     #markup = types.InlineKeyboardMarkup()
     #markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+    markup_items = types.InlineKeyboardMarkup()
     item1 = types.InlineKeyboardButton('Asuka', callback_data='asuka')
     item2 = types.InlineKeyboardButton('Zero Two',callback_data='zero_two')
     item3 = types.InlineKeyboardButton('Ryuko Matoi', callback_data='ryuoko_matoi')
     markup.add(item1, item2, item3)
-    bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup_items)
     #bot.register_next_step_handler(call.message, chosen_persona)
 
     user_id = message.from_user.id
-    @bot.callback_query_handler(func=lambda call: True)
-    def but(call):
-        if call.message:
-            if call.data == 'asuka':
-                dialog_history[user_id] = {'chosen_girl': 'Asuka', 'messages': []}
-            elif call.data == 'zero_two':
-                dialog_history[user_id] = {'chosen_girl': 'Zero Two', 'messages': []}
-            elif call.data == 'ryuoko_matoi':
-                dialog_history[user_id] = {'chosen_girl': 'Ryuoko Matoi', 'messages': []}
+@bot.callback_query_handler(func=lambda call: True)
+def but(call):
+    if call.message:
+        if call.data == 'asuka':
+            dialog_history[user_id] = {'chosen_girl': 'Asuka', 'messages': []}
+        elif call.data == 'zero_two':
+            dialog_history[user_id] = {'chosen_girl': 'Zero Two', 'messages': []}
+        elif call.data == 'ryuoko_matoi':
+            dialog_history[user_id] = {'chosen_girl': 'Ryuoko Matoi', 'messages': []}
     #dialog_history[user_id] = {'chosen_girl': message.text, 'messages': []}
     #reply_keyboard = [['Friendly'], ['Aggressive'], ['Mysterious']]
     #markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+    markup_buttons = types.InlineKeyboardMurkup()
     but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
     but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
-    bot.send_message(message.chat.id, 'Choose a behaviour:', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Choose a behaviour:', reply_markup=markup_buttons)
     #bot.register_next_step_handler(call.message, chosen_behaviour)
 
     user_id = message.from_user.id
-    @bot.callback_query_handler(func=lambda call: True)
-    def item(call):
-        if call.message:
-            if call.data == 'friendly':
-                dialog_history[user_id]['chosen_behaviour'] = 'Friendly'
-            elif call.data == 'aggressive':
-                dialog_history[user_id]['chosen_behaviour'] = 'Aggressive'
-            elif call.data == 'mysterious':
-                dialog_history[user_id]['chosen_behaviour'] = 'Mysterious'
+bot.callback_query_handler(func=lambda call: True)
+def item(call):
+    if call.message:
+        if call.data == 'friendly':
+            dialog_history[user_id]['chosen_behaviour'] = 'Friendly'
+        elif call.data == 'aggressive':
+            dialog_history[user_id]['chosen_behaviour'] = 'Aggressive'
+        elif call.data == 'mysterious':
+            dialog_history[user_id]['chosen_behaviour'] = 'Mysterious'
     #dialog_history[user_id]['chosen_behaviour'] = message.text
     bot.send_message(message.chat.id, 'Start chatting:')
     bot.register_next_step_handler(call.message, chat)
