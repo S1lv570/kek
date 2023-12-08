@@ -41,6 +41,7 @@ def start(message):
     #bot.register_next_step_handler(call.message, chosen_persona)
     global user_id
     user_id = message.from_user.id
+    return user_id
 
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
