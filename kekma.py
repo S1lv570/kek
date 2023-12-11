@@ -32,19 +32,19 @@ def start(message):
     #reply_keyboard = [['Asuka'], ['Zero Two'], ['Ryuko Matoi']]
     #markup = types.InlineKeyboardMarkup()
     #markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
-    markup_items = types.InlineKeyboardMarkup()
+    markup_items = types.InlineKeyboardMarkup(row_width=3)
     item1 = types.InlineKeyboardButton('Asuka', callback_data='asuka')
     item2 = types.InlineKeyboardButton('Zero Two',callback_data='zero_two')
     item3 = types.InlineKeyboardButton('Ryuko Matoi', callback_data='ryuoko_matoi')
     markup_items.add(item1, item2, item3)
     bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup_items)
     #bot.register_next_step_handler(call.message, chosen_persona)
-    global user_id
     user_id = message.from_user.id
     return user_id
 
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
+    global dialog_history
     if call.message:
         if call.data == 'asuka':
             dialog_history[user_id] = {'chosen_girl': 'Asuka', 'messages': []}
@@ -55,7 +55,7 @@ def but(call):
     #dialog_history[user_id] = {'chosen_girl': message.text, 'messages': []}
     #reply_keyboard = [['Friendly'], ['Aggressive'], ['Mysterious']]
     #markup = types.ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
-    markup_buttons = types.InlineKeyboardMurkup()
+    markup_buttons = types.InlineKeyboardMurkup(row_width=3)
     but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
     but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
@@ -66,6 +66,7 @@ def but(call):
     user_id = message.from_user.id
 bot.callback_query_handler(func=lambda call: True)
 def item(call):
+    global dialog_history
     if call.message:
         if call.data == 'friendly':
             dialog_history[user_id]['chosen_behaviour'] = 'Friendly'
