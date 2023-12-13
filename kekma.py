@@ -42,7 +42,7 @@ def start(message):
     user_id = message.from_user.id
     return user_id
 
-@bot.callback_query_handler(func=lambda call: True)
+@bot.callback_query_handler(func=lambda call: True, user_id)
 def but(call):
     global dialog_history
     global user_id
