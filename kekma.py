@@ -45,6 +45,7 @@ def start(message):
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
     global dialog_history
+    global user_id
     if call.message:
         if call.data == 'asuka':
             dialog_history[user_id] = {'chosen_girl': 'Asuka', 'messages': []}
