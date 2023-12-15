@@ -32,11 +32,11 @@ def but(call):
     global dialog_history
     if call.message:
         if call.data == 'asuka':
-            dialog_history[user_id] = {'chosen_girl': 'Asuka', 'messages': []}
+            bot.send_message(message.chat.id, 'Your choice: Asuka')
         elif call.data == 'zero_two':
-            dialog_history[user_id] = {'chosen_girl': 'Zero Two', 'messages': []}
+            bot.send_message(message.chat.id, 'Your choice: Zero Two')
         elif call.data == 'ryuoko_matoi':
-            dialog_history[user_id] = {'chosen_girl': 'Ryuoko Matoi', 'messages': []}
+            bot,send_message(message.chat.id, 'Your choice: Ryuoko Matoi')
     markup_buttons = types.InlineKeyboardMurkup(row_width=3)
     but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
     but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
