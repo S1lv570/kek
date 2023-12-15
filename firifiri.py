@@ -37,7 +37,7 @@ def but(call):
             bot.send_message(call.message.chat.id, 'Your choice: Zero Two')
         elif call.data == 'ryuoko_matoi':
             bot.send_message(call.message.chat.id, 'Your choice: Ryuoko Matoi')
-    markup_buttons = types.InlineKeyboardMurkup(row_width=3)
+    markup_buttons = types.InlineKeyboardMarkup(row_width=3)
     but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
     but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
