@@ -49,14 +49,17 @@ def item(call):
     if call.message:
         if call.data == 'friendly':
             bot.send_message(call.message.chat.id, 'Chosen behaviour: Friendly')
+            bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
+            bot.register_next_step_handler(call.message, chat)
         elif call.data == 'aggressive':
             bot.send_message(call.message.chat.id, 'Chosen behaviour: Aggressive')
+            bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
+            bot.register_next_step_handler(call.message, chat)
         elif call.data == 'mysterious':
             bot.send_message(cal.message.chat.id, 'Chosen behaviour: Mysterious')
+            bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
+            bot.register_next_step_handler(call.message, chat)
 
-    bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
-
-@bot.message_handler(func=lambda message: True)
 def chat(message):
     inputs = tokenizer.encode(message.text, return_tensors='pt', truncation=True, max_length=1024)
     reply_ids = model.generate(inputs, max_length=1024, pad_token_id=tokenizer.eos_token_id, no_repeat_ngram_size=3, do_sample=True, temperature=0.7)
