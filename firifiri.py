@@ -50,11 +50,11 @@ def item(call):
     global dialog_history
     if call.message:
         if call.data == 'friendly':
-            dialog_history[user_id]['chosen_behaviour'] = 'Friendly'
+            bot.send_message(message.chat.id, 'Chosen behaviour: Friendly')
         elif call.data == 'aggressive':
-            dialog_history[user_id]['chosen_behaviour'] = 'Aggressive'
+            bot.send_message(message.chat.id, 'Chosen behaviour: Aggressive')
         elif call.data == 'mysterious':
-            dialog_history[user_id]['chosen_behaviour'] = 'Mysterious'
+            bot.send_message(message.chat.id, 'Chosen behaviour: Mysterious')
 
     bot.send_message(message.chat.id, 'Start chatting. Enter your message')
 
