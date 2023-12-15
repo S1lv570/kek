@@ -43,8 +43,6 @@ def but(call):
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
     markup_buttons.add(but1, but2, but3)
     bot.send_message(call.message.chat.id, 'Choose a behaviour:', reply_markup=markup_buttons)
-
-    user_id = message.from_user.id
 bot.callback_query_handler(func=lambda call: True)
 def item(call):
     global user_id
