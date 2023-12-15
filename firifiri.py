@@ -27,7 +27,7 @@ def start(message):
     markup_items.add(item1, item2, item3)
     bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup_items)
 
-@bot.callback_query_handler(func=lambda call: True, user_id)
+@bot.callback_query_handler(func=lambda call: True)
 def but(call):
     global dialog_history
     if call.message:

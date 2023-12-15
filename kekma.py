@@ -43,7 +43,7 @@ def start(message):
     bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup_items)
     #bot.register_next_step_handler(call.message, chosen_persona)
 
-@bot.callback_query_handler(func=lambda call: True, user_id)
+@bot.callback_query_handler(func=lambda call: True)
 def but(call):
     global dialog_history
     if call.message:
