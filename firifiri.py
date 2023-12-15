@@ -29,6 +29,7 @@ def start(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
+    global user_id
     if call.message:
         if call.data == 'asuka':
             bot.send_message(user_id, 'Your choice: Asuka')
@@ -46,7 +47,7 @@ def but(call):
     user_id = message.from_user.id
 bot.callback_query_handler(func=lambda call: True)
 def item(call):
-    global dialog_history
+    global user_id
     if call.message:
         if call.data == 'friendly':
             bot.send_message(user_id, 'Chosen behaviour: Friendly')
@@ -55,7 +56,7 @@ def item(call):
         elif call.data == 'mysterious':
             bot.send_message(user_id, 'Chosen behaviour: Mysterious')
 
-    bot.send_message(message.chat.id, 'Start chatting. Enter your message')
+    bot.send_message(user_id, 'Start chatting. Enter your message')
 
 @bot.message_handler(func=lambda message: True)
 def chat(message):
