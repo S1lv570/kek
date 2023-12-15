@@ -32,11 +32,11 @@ def but(call):
     global user_id
     if call.message:
         if call.data == 'asuka':
-            bot.send_message(user_id, 'Your choice: Asuka')
+            bot.send_message(call.message.chat.id, 'Your choice: Asuka')
         elif call.data == 'zero_two':
-            bot.send_message(user_id, 'Your choice: Zero Two')
+            bot.send_message(call.message.chat.id, 'Your choice: Zero Two')
         elif call.data == 'ryuoko_matoi':
-            bot.send_message(user_id, 'Your choice: Ryuoko Matoi')
+            bot.send_message(call.message.chat.id, 'Your choice: Ryuoko Matoi')
     markup_buttons = types.InlineKeyboardMurkup(row_width=3)
     but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
     but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
@@ -50,13 +50,13 @@ def item(call):
     global user_id
     if call.message:
         if call.data == 'friendly':
-            bot.send_message(user_id, 'Chosen behaviour: Friendly')
+            bot.send_message(call.message.chat.id, 'Chosen behaviour: Friendly')
         elif call.data == 'aggressive':
-            bot.send_message(user_id, 'Chosen behaviour: Aggressive')
+            bot.send_message(call.message.chat.id, 'Chosen behaviour: Aggressive')
         elif call.data == 'mysterious':
-            bot.send_message(user_id, 'Chosen behaviour: Mysterious')
+            bot.send_message(cal.message.chat.id, 'Chosen behaviour: Mysterious')
 
-    bot.send_message(user_id, 'Start chatting. Enter your message')
+    bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
 
 @bot.message_handler(func=lambda message: True)
 def chat(message):
