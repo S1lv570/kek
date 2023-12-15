@@ -31,7 +31,7 @@ def start(message):
 def but(call):
     global dialog_history
     if call.message:
-        if 99call.data == 'asuka':
+        if call.data == 'asuka':
             dialog_history[user_id] = {'chosen_girl': 'Asuka', 'messages': []}
         elif call.data == 'zero_two':
             dialog_history[user_id] = {'chosen_girl': 'Zero Two', 'messages': []}
