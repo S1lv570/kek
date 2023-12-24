@@ -1,4 +1,4 @@
-import random, logging, telebot
+import random, logging, telebot, json
 from telebot import types
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
