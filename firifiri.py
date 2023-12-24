@@ -37,7 +37,7 @@ def start(message):
 
 @bot.message_handler(commands=['ls'])
 def ls(message):
-    bot.send_message(message.chat.id, load())
+    bot.send_message(message.chat.id, f'{load()}')
 
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
