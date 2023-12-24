@@ -13,7 +13,7 @@ model = AutoModelForCausalLM.from_pretrained(MODEL)
 
 bot = telebot.TeleBot(API_TOKEN)
 
-dialog_history = {}
+history = {}
 user_id = 0
 
 @bot.message_handler(commands=['start'])
@@ -32,10 +32,13 @@ def but(call):
     global user_id
     if call.message:
         if call.data == 'asuka':
+            history['char'] = 'Asuka'
             bot.send_message(call.message.chat.id, 'Your choice: Asuka')
         elif call.data == 'zero_two':
+            history['char'] = 'Zero Two'
             bot.send_message(call.message.chat.id, 'Your choice: Zero Two')
         elif call.data == 'ryuoko_matoi':
+            history['char'] = 'Ryouko Matoi'
             bot.send_message(call.message.chat.id, 'Your choice: Ryuoko Matoi')
     markup_buttons = types.InlineKeyboardMarkup(row_width=3)
     but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
@@ -43,6 +46,15 @@ def but(call):
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
     markup_buttons.add(but1, but2, but3)
     bot.send_message(call.message.chat.id, 'Choose a behaviour:', reply_markup=markup_buttons)
+    bot.register_next_step_handler(message, dump)
+
+def dump():
+    with open('kek//history.json', 'w') as hist:
+        json.dump(history, hist)
+
+def load():
+    with open('kek/history.json', 'r') as hist:
+        bot.send_message(message.chat.id, json.load(hist))
 
 @bot.callback_query_handler(func=lambda call: True)
 def item(call):
@@ -66,5 +78,9 @@ def chat(message):
 @bot.message_handler(commands=['clear'])
 def cancel(message):
     bot.send_message(message.chat.id, 'Goodbye! Feel free to start a new conversation anytime.')
+
+@bot.message_handler(commands=['ls'])
+def ls(message):
+    load()
 
 bot.infinity_polling()
