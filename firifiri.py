@@ -22,7 +22,7 @@ def dump():
 
 def load():
     with open('kek/history.json', 'r') as hist:
-        bot.send_message(message.chat.id, json.load(hist))
+        json.load(hist)
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -37,7 +37,7 @@ def start(message):
 
 @bot.message_handler(commands=['ls'])
 def ls(message):
-    load()
+    bot.send_message(message.chat.id, load())
 
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
