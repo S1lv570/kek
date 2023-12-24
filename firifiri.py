@@ -16,6 +16,14 @@ bot = telebot.TeleBot(API_TOKEN)
 history = {}
 user_id = 0
 
+def dump():
+    with open('kek//history.json', 'w') as hist:
+        json.dump(history, hist)
+
+def load():
+    with open('kek/history.json', 'r') as hist:
+        bot.send_message(message.chat.id, json.load(hist))
+
 @bot.message_handler(commands=['start'])
 def start(message):
     global user_id
@@ -46,15 +54,8 @@ def but(call):
     but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
     markup_buttons.add(but1, but2, but3)
     bot.send_message(call.message.chat.id, 'Choose a behaviour:', reply_markup=markup_buttons)
-    bot.register_next_step_handler(message, dump)
-
-def dump():
-    with open('kek//history.json', 'w') as hist:
-        json.dump(history, hist)
-
-def load():
-    with open('kek/history.json', 'r') as hist:
-        bot.send_message(message.chat.id, json.load(hist))
+    dump()
+    bot.send_message(call.message.chat.id, 'Your choice successfully dumped')
 
 @bot.callback_query_handler(func=lambda call: True)
 def item(call):
@@ -65,7 +66,7 @@ def item(call):
         elif call.data == 'aggressive':
             bot.send_message(call.message.chat.id, 'Chosen behaviour: Aggressive')
         elif call.data == 'mysterious':
-            bot.send_message(cal.message.chat.id, 'Chosen behaviour: Mysterious')
+            bot.send_message(call.message.chat.id, 'Chosen behaviour: Mysterious')
         bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
 
 @bot.message_handler(func=lambda message: True)
