@@ -35,6 +35,10 @@ def start(message):
     markup_items.add(item1, item2, item3)
     bot.send_message(message.chat.id, 'Choose one of the girls:', reply_markup=markup_items)
 
+@bot.message_handler(commands=['ls'])
+def ls(message):
+    load()
+
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
     global user_id
@@ -79,9 +83,5 @@ def chat(message):
 @bot.message_handler(commands=['clear'])
 def cancel(message):
     bot.send_message(message.chat.id, 'Goodbye! Feel free to start a new conversation anytime.')
-
-@bot.message_handler(commands=['ls'])
-def ls(message):
-    load()
 
 bot.infinity_polling()
