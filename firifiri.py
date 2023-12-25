@@ -22,7 +22,8 @@ def dump():
 
 def load():
     with open('kek/history.json', 'r') as hist:
-        print(json.load(hist))
+        ld = json.load(hist)
+    return ld
 
 @bot.message_handler(commands=['start'])
 def start(message):
