@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 API_TOKEN = '6259573339:AAECdYJSGJETtWkfnds2ZOVGZWLMyz2o3Ts'
 MODEL = "microsoft/DialoGPT-large"
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL)
+tokenizer = AutoTokenizer.from_pretrained(MODEL, padding_side='left')
 model = AutoModelForCausalLM.from_pretrained(MODEL)
 
 bot = telebot.TeleBot(API_TOKEN)
