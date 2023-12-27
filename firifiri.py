@@ -78,7 +78,7 @@ def item(call):
 def chat(message):
     #inputs = tokenizer.encode(message.text, return_tensors='pt', truncation=True, max_length=1024)
     inputs = tokenizer.encode(message.text + tokenizer.eos_token, return_tensors='pt')
-    reply_ids = model.generate(inputs, max_length=1024, pad_token_id=tokenizer.eos_token_id, no_repeat_ngram_size=3, do_sample=True, temperature=1.5)
+    reply_ids = model.generate(inputs, max_length=1024, pad_token_id=tokenizer.eos_token_id, no_repeat_ngram_size=3, do_sample=True, temperature=1.0)
     reply = tokenizer.decode(reply_ids[:, inputs.shape[-1]:][0], skip_special_tokens=True)
     bot.send_message(message.chat.id, f'{reply}')
 
