@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 API_TOKEN = '6259573339:AAECdYJSGJETtWkfnds2ZOVGZWLMyz2o3Ts'
 MODEL = "microsoft/DialoGPT-large"
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL, padding_side='left')
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
 model = AutoModelForCausalLM.from_pretrained(MODEL)
 
 bot = telebot.TeleBot(API_TOKEN)
@@ -77,7 +77,7 @@ def item(call):
 @bot.message_handler(func=lambda message: True)
 def chat(message):
     #inputs = tokenizer.encode(message.text, return_tensors='pt', truncation=True, max_length=1024)
-    inputs = tokenizer.encode(message.text + tokenizer.eos_token, return_tensors='pt')
+    inputs = tokenizer.encode(tokenizer.eos_token + message.text, return_tensors='pt')
     reply_ids = model.generate(inputs, max_length=1024, pad_token_id=tokenizer.eos_token_id, no_repeat_ngram_size=3, do_sample=True, temperature=0.7)
     reply = tokenizer.decode(reply_ids[:, inputs.shape[-1]:][0], skip_special_tokens=True)
     bot.send_message(message.chat.id, f'{reply}')
