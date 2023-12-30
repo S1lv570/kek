@@ -27,8 +27,8 @@ def load():
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    global user_id
     user_id - message.from_user.id
+    history[user_id] = {'char': '', 'behav': '', 'hist': []}
     markup_items = types.InlineKeyboardMarkup(row_width=3)
     item1 = types.InlineKeyboardButton('Asuka', callback_data='asuka')
     item2 = types.InlineKeyboardButton('Zero Two',callback_data='zero_two')
@@ -39,40 +39,19 @@ def start(message):
 @bot.message_handler(commands=['ls'])
 def ls(message):
     bot.send_message(message.chat.id, f'{load()}')
-
 @bot.callback_query_handler(func=lambda call: True)
 def but(call):
-    global user_id
-    if call.message:
-        if call.data == 'asuka':
-            history['char'] = 'Asuka'
-            bot.send_message(call.message.chat.id, 'Your choice: Asuka')
-        elif call.data == 'zero_two':
-            history['char'] = 'Zero Two'
-            bot.send_message(call.message.chat.id, 'Your choice: Zero Two')
-        elif call.data == 'ryuoko_matoi':
-            history['char'] = 'Ryouko Matoi'
-            bot.send_message(call.message.chat.id, 'Your choice: Ryuoko Matoi')
-    markup_buttons = types.InlineKeyboardMarkup(row_width=3)
-    but1 = types.InlineKeyboardButton('Friendly', callback_data='friendly')
-    but2 = types.InlineKeyboardButton('Aggressive', callback_data='aggressive')
-    but3 = types.InlineKeyboardButton('Mysterious', callback_data='mysterious')
-    markup_buttons.add(but1, but2, but3)
-    bot.send_message(call.message.chat.id, 'Choose a behaviour:', reply_markup=markup_buttons)
+    if call.data == 'asuka':
+        history[user_id]['char'] = 'Asuka'
+        bot.send_message(call.message.chat.id, 'Your choice: Asuka')
+    elif call.data == 'zero_two':
+        history[user_id]['char'] = 'Zero Two'
+        bot.send_message(call.message.chat.id, 'Your choice: Zero Two')
+    elif call.data == 'ryuoko_matoi':
+        history[user_id]['char'] = 'Ryouko Matoi'
+        bot.send_message(call.message.chat.id, 'Your choice: Ryuoko Matoi')
     dump()
-    bot.send_message(call.message.chat.id, 'Your choice successfully dumped')
-
-@bot.callback_query_handler(func=lambda call: True)
-def item(call):
-    global user_id
-    if call.message:
-        if call.data == 'friendly':
-            bot.send_message(call.message.chat.id, 'Chosen behaviour: Friendly')
-        elif call.data == 'aggressive':
-            bot.send_message(call.message.chat.id, 'Chosen behaviour: Aggressive')
-        elif call.data == 'mysterious':
-            bot.send_message(call.message.chat.id, 'Chosen behaviour: Mysterious')
-        bot.send_message(call.message.chat.id, 'Start chatting. Enter your message')
+    bot.send_message(call.message.chat.id, 'Start chating')
 
 @bot.message_handler(func=lambda message: True)
 def chat(message):
@@ -85,5 +64,4 @@ def chat(message):
 @bot.message_handler(commands=['clear'])
 def cancel(message):
     bot.send_message(message.chat.id, 'Goodbye! Feel free to start a new conversation anytime.')
-
 bot.infinity_polling()
